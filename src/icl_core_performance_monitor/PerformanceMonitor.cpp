@@ -109,7 +109,7 @@ double PerformanceMonitor::measurement(string timer_name, string description, st
 }
 
 double PerformanceMonitor::startStop(string timer_name, string description, string prefix,
-                                     logging::LogLevel level)
+                                     logging::LogLevel level, const bool silent)
 {
   /*
    * If timer_name exists:
@@ -130,7 +130,7 @@ double PerformanceMonitor::startStop(string timer_name, string description, stri
       double double_ms = d.toNSec() / 1000000.0;
       monitor->addEvent(prefix, description, double_ms);
       monitor->m_timer[timer_name] = end;
-      if (getInstance()->m_print_stop)
+      if (!silent && getInstance()->m_print_stop)
       {
         std::stringstream ss;
         ss << makeName(prefix, description) << ": " << double_ms << " ms";

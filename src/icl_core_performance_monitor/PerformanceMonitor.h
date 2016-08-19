@@ -110,10 +110,11 @@ public:
    * @param description The event description. Keep it short for better readability.
    * @param prefix Optional prefix to put the event into a group. Defaults to ""
    * @param level Optional logging level. Defaults to icl_core::logging::eLL_INFO
+   * @param silent Optional overwrite to suppress the output into the logstream
    * @return The measurement value in ms
    */
   static double startStop(std::string timer_name, std::string description, std::string prefix = "",
-                          logging::LogLevel level = icl_core::logging::eLL_INFO);
+                          logging::LogLevel level = icl_core::logging::eLL_INFO, const bool silent = false);
 
   /**
    * @brief addData Manually insert a time measurement with given identifier

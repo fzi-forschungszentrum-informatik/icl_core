@@ -18,8 +18,8 @@
  */
 //----------------------------------------------------------------------
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QString>
+#include <QCoreApplication>
+#include <QString>
 
 #include <icl_core/tString.h>
 #include <icl_core_config/Config.h>
