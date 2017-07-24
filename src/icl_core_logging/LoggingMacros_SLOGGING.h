@@ -3,10 +3,10 @@
 // -- BEGIN LICENSE BLOCK ----------------------------------------------
 // This program is free software licensed under the CDDL
 // (COMMON DEVELOPMENT AND DISTRIBUTION LICENSE Version 1.0).
-// You can find a copy of this license in LICENSE.txt in the top
+// You can find a copy of this license in LICENSE in the top
 // directory of the source code.
 //
-// © Copyright 2016 FZI Forschungszentrum Informatik, Karlsruhe, Germany
+// © Copyright 2017 FZI Forschungszentrum Informatik, Karlsruhe, Germany
 // -- END LICENSE BLOCK ------------------------------------------------
 
 //----------------------------------------------------------------------
@@ -23,6 +23,16 @@
 //----------------------------------------------------------------------
 #ifndef ICL_CORE_LOGGING_LOGGING_MACROS__SLOGGING_H_INCLUDED
 #define ICL_CORE_LOGGING_LOGGING_MACROS__SLOGGING_H_INCLUDED
+
+// Fallback for __func__ / __FUNCTION__ as per
+// https://gcc.gnu.org/onlinedocs/gcc-4.4.4/gcc/Function-Names.html
+#ifdef __FUNCTION__
+#  define __func__ __FUNCTION__
+#else
+#  ifndef __func__
+#    define __func__ "<unknown>"
+#  endif
+#endif
 
 #ifdef __ANDROID__
 #include <android/log.h>
@@ -61,7 +71,7 @@
         thread_stream.setLine(line);                                    \
         thread_stream.setClassname(classname);                          \
         thread_stream.setObjectname(objectname);                        \
-        thread_stream.setFunction(__FUNCTION__);                        \
+        thread_stream.setFunction(__func__);                            \
         thread_stream << arg;                                           \
       }                                                                 \
     }                                                                   \

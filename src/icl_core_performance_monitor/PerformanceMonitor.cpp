@@ -3,10 +3,10 @@
 // -- BEGIN LICENSE BLOCK ----------------------------------------------
 // This program is free software licensed under the CDDL
 // (COMMON DEVELOPMENT AND DISTRIBUTION LICENSE Version 1.0).
-// You can find a copy of this license in LICENSE.txt in the top
+// You can find a copy of this license in LICENSE in the top
 // directory of the source code.
 //
-// © Copyright 2016 FZI Forschungszentrum Informatik, Karlsruhe, Germany
+// © Copyright 2017 FZI Forschungszentrum Informatik, Karlsruhe, Germany
 // -- END LICENSE BLOCK ------------------------------------------------
 
 //----------------------------------------------------------------------
@@ -265,7 +265,7 @@ void PerformanceMonitor::createStatisticSummaryNonTime(stringstream& ss, string 
         "\n";
 }
 
-void PerformanceMonitor::printSummary(string prefix, string name,
+string PerformanceMonitor::printSummary(string prefix, string name,
                                       icl_core::logging::LogLevel level)
 {
   PerformanceMonitor* monitor = getInstance();
@@ -273,6 +273,7 @@ void PerformanceMonitor::printSummary(string prefix, string name,
   std::stringstream ss;
   monitor->createStatisticSummary(ss, prefix, name);
   monitor->print(ss.str(), level);
+  return ss.str();
 }
 
 void PerformanceMonitor::enablePrefix(string prefix)
@@ -300,18 +301,20 @@ void PerformanceMonitor::disablePrefix(string prefix)
   }
 }
 
-void PerformanceMonitor::printSummaryAll(icl_core::logging::LogLevel level)
+string PerformanceMonitor::printSummaryAll(icl_core::logging::LogLevel level)
 {
   PerformanceMonitor* monitor = getInstance();
 
+  std::stringstream ss;
   for (map<string, bool>::iterator it=monitor->m_enabled_prefix.begin();
        it != monitor->m_enabled_prefix.end(); ++it)
   {
-    printSummaryFromPrefix(it->first, level);
+    ss << printSummaryFromPrefix(it->first, level);
   }
+  return ss.str();
 }
 
-void PerformanceMonitor::printSummaryFromPrefix(string prefix, icl_core::logging::LogLevel level)
+string PerformanceMonitor::printSummaryFromPrefix(string prefix, icl_core::logging::LogLevel level)
 {
   PerformanceMonitor* monitor = getInstance();
   bool first = true;
@@ -369,6 +372,7 @@ void PerformanceMonitor::printSummaryFromPrefix(string prefix, icl_core::logging
     }
   }
   monitor->print(ss.str(), level);
+  return ss.str();
 }
 
 double PerformanceMonitor::getAverage(string name)
@@ -410,6 +414,18 @@ void PerformanceMonitor::getMedianNonTime(string name, double& median, double& m
   median = tmp[tmp.size() / 2];
   min = tmp[0];
   max = tmp[tmp.size() - 1];
+}
+
+vector<double> PerformanceMonitor::getData(string name, string prefix)
+{
+  PerformanceMonitor* monitor = getInstance();
+  return monitor->m_data[ makeName(prefix, name) ];
+}
+
+vector<double> PerformanceMonitor::getNonTimeData(string name, string prefix)
+{
+  PerformanceMonitor* monitor = getInstance();
+  return monitor->m_data_nontime[ makeName(prefix, name) ];
 }
 
 } // namespace timer

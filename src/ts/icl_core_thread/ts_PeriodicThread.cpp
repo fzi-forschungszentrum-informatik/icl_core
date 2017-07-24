@@ -3,10 +3,10 @@
 // -- BEGIN LICENSE BLOCK ----------------------------------------------
 // This program is free software licensed under the CDDL
 // (COMMON DEVELOPMENT AND DISTRIBUTION LICENSE Version 1.0).
-// You can find a copy of this license in LICENSE.txt in the top
+// You can find a copy of this license in LICENSE in the top
 // directory of the source code.
 //
-// © Copyright 2016 FZI Forschungszentrum Informatik, Karlsruhe, Germany
+// © Copyright 2017 FZI Forschungszentrum Informatik, Karlsruhe, Germany
 // -- END LICENSE BLOCK ------------------------------------------------
 
 //----------------------------------------------------------------------
@@ -179,9 +179,9 @@ void runPeriodicThread(const TimeSpan& period, size_t runs,
   }
 
   BOOST_REQUIRE(test_thread.hasRun());
-  BOOST_MESSAGE("max deviation=" << test_thread.maxDeviation().toNSec() << "ns" <<
-                ", accumulated deviation=" << test_thread.accumulatedDeviation().toNSec() << "ns" <<
-                ", mean deviation=" << test_thread.meanDeviation().toNSec() << "ns");
+  BOOST_TEST_MESSAGE("max deviation=" << test_thread.maxDeviation().toNSec() << "ns" <<
+                     ", accumulated deviation=" << test_thread.accumulatedDeviation().toNSec() << "ns" <<
+                     ", mean deviation=" << test_thread.meanDeviation().toNSec() << "ns");
   BOOST_CHECK(test_thread.maxDeviation() < max_deviation);
   BOOST_CHECK(test_thread.meanDeviation() < mean_deviation);
 }

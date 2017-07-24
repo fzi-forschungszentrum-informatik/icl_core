@@ -3,10 +3,10 @@
 // -- BEGIN LICENSE BLOCK ----------------------------------------------
 // This program is free software licensed under the CDDL
 // (COMMON DEVELOPMENT AND DISTRIBUTION LICENSE Version 1.0).
-// You can find a copy of this license in LICENSE.txt in the top
+// You can find a copy of this license in LICENSE in the top
 // directory of the source code.
 //
-// © Copyright 2016 FZI Forschungszentrum Informatik, Karlsruhe, Germany
+// © Copyright 2017 FZI Forschungszentrum Informatik, Karlsruhe, Germany
 // -- END LICENSE BLOCK ------------------------------------------------
 
 //----------------------------------------------------------------------
@@ -27,7 +27,7 @@
 #endif
 
 #include <boost/regex.h>
-#include <tinyxml/tinyxml.h>
+#include <tinyxml.h>
 #include <icl_core/icl_core.h>
 
 #include "icl_core_config/Config.h"
