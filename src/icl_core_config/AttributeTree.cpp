@@ -6,7 +6,7 @@
 // You can find a copy of this license in LICENSE in the top
 // directory of the source code.
 //
-// © Copyright 2017 FZI Forschungszentrum Informatik, Karlsruhe, Germany
+// © Copyright 2018 FZI Forschungszentrum Informatik, Karlsruhe, Germany
 // -- END LICENSE BLOCK ------------------------------------------------
 
 //----------------------------------------------------------------------
@@ -705,33 +705,25 @@ AttributeTree::AttributeTree(const AttributeTree& tree)
   file_path_str_len = strlen(m_file_path_str);
   file_name_str_len = strlen(m_file_name_str);
 
-  if (&tree)
+  if (tree.m_this_description)
   {
-    if (tree.m_this_description)
-    {
-      m_this_description = icl_core::os::strdup(tree.m_this_description);
-    }
-    else
-    {
-      m_this_description = 0;
-    }
-    if (tree.m_this_attribute)
-    {
-      m_this_attribute = icl_core::os::strdup(tree.m_this_attribute);
-    }
-    else
-    {
-      m_this_attribute = 0;
-    }
-    if (tree.m_subtree_list)
-    {
-      tree.m_subtree_list->copy(this);
-    }
+    m_this_description = icl_core::os::strdup(tree.m_this_description);
   }
   else
   {
     m_this_description = 0;
+  }
+  if (tree.m_this_attribute)
+  {
+    m_this_attribute = icl_core::os::strdup(tree.m_this_attribute);
+  }
+  else
+  {
     m_this_attribute = 0;
+  }
+  if (tree.m_subtree_list)
+  {
+    tree.m_subtree_list->copy(this);
   }
 
   m_changed = false;
@@ -744,33 +736,25 @@ AttributeTree::AttributeTree(const AttributeTree &tree, AttributeTree *parent)
   file_path_str_len = strlen(m_file_path_str);
   file_name_str_len = strlen(m_file_name_str);
 
-  if (&tree)
+  if (tree.m_this_description)
   {
-    if (tree.m_this_description)
-    {
-      m_this_description = icl_core::os::strdup(tree.m_this_description);
-    }
-    else
-    {
-      m_this_description = 0;
-    }
-    if (tree.m_this_attribute)
-    {
-      m_this_attribute = icl_core::os::strdup(tree.m_this_attribute);
-    }
-    else
-    {
-      m_this_attribute = 0;
-    }
-    if (tree.m_subtree_list)
-    {
-      tree.m_subtree_list->copy(this);
-    }
+    m_this_description = icl_core::os::strdup(tree.m_this_description);
   }
   else
   {
     m_this_description = 0;
+  }
+  if (tree.m_this_attribute)
+  {
+    m_this_attribute = icl_core::os::strdup(tree.m_this_attribute);
+  }
+  else
+  {
     m_this_attribute = 0;
+  }
+  if (tree.m_subtree_list)
+  {
+    tree.m_subtree_list->copy(this);
   }
   // Beim Parent in die Liste einfügen
   if (m_parent)

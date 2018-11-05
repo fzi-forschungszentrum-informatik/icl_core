@@ -6,7 +6,7 @@
 // You can find a copy of this license in LICENSE in the top
 // directory of the source code.
 //
-// © Copyright 2017 FZI Forschungszentrum Informatik, Karlsruhe, Germany
+// © Copyright 2018 FZI Forschungszentrum Informatik, Karlsruhe, Germany
 // -- END LICENSE BLOCK ------------------------------------------------
 
 //----------------------------------------------------------------------
@@ -24,14 +24,25 @@
 #ifndef ICL_CORE_LOGGING_LOGGING_MACROS__SLOGGING_H_INCLUDED
 #define ICL_CORE_LOGGING_LOGGING_MACROS__SLOGGING_H_INCLUDED
 
-// Fallback for __func__ / __FUNCTION__ as per
-// https://gcc.gnu.org/onlinedocs/gcc-4.4.4/gcc/Function-Names.html
-#ifdef __FUNCTION__
-#  define __func__ __FUNCTION__
+// https://www.boost.org/doc/libs/1_58_0/boost/current_function.hpp
+#if defined(__GNUC__) || (defined(__MWERKS__) && (__MWERKS__ >= 0x3000)) ||                      \
+  (defined(__ICC) && (__ICC >= 600)) || defined(__ghs__)
+#  define SLOGGING_CURRENT_FUNCTION __FUNCTION__
+#elif defined(__DMC__) && (__DMC__ >= 0x810)
+#  define SLOGGING_CURRENT_FUNCTION __FUNCTION__
+#elif defined(__FUNCSIG__)
+#  define SLOGGING_CURRENT_FUNCTION __FUNCSIG__
+#elif (defined(__INTEL_COMPILER) && (__INTEL_COMPILER >= 600)) ||                                \
+  (defined(__IBMCPP__) && (__IBMCPP__ >= 500))
+#  define SLOGGING_CURRENT_FUNCTION __FUNCTION__
+#elif defined(__BORLANDC__) && (__BORLANDC__ >= 0x550)
+#  define SLOGGING_CURRENT_FUNCTION __FUNC__
+#elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901)
+#  define SLOGGING_CURRENT_FUNCTION __func__
+#elif defined(__cplusplus) && (__cplusplus >= 201103)
+#  define SLOGGING_CURRENT_FUNCTION __func__
 #else
-#  ifndef __func__
-#    define __func__ "<unknown>"
-#  endif
+#  define SLOGGING_CURRENT_FUNCTION "(unknown)"
 #endif
 
 #ifdef __ANDROID__
